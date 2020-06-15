@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>vote name</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="/css/bootstrap.css">
+    </head>
+    <body>
+
+        <h2>test</h2>
+        <!-- <span th:text="'hello world'+${testText}+${vote1}"></span> -->
+        <div th:unless="${#lists.isEmpty(voteDetails)}">
+            <form th:action="@{/collect}" method="POST">
+            <div th:each="voteEntry:${voteDetails}">
+                <!-- <p th:text="${voteEntry.item}">Item Name</p> -->
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="selectedItem" id="optionsRadios1" th:text="${voteEntry.item}" th:attr="value=${voteEntry.iid}">
+                    </label>
+                    <span th:text="${voteEntry.count}">Item Count</span>
+                </div>
+                <!-- <p th:text="${voteEntry.count}">Item Count</p> -->
+            </div>
+            <input type="submit" value="Submit">
+            </form>
+        </div>
+
+
+
+<script src="/js/bootstrap.js"></script>
+    </body>
+</html>
+
+<!-- <label for="name">默认的复选框和单选按钮的实例</label>
+<div class="checkbox">
+    <label><input type="checkbox" value="">选项 1</label>
+</div>
+<div class="checkbox">
+    <label><input type="checkbox" value="">选项 2</label>
+</div> -->

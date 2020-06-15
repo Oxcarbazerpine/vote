@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+        function add() {
+
+            // console.log("clicked");
+
+            //创建li
+            var newItemDiv = document.createElement("div");
+            //创建文本
+            var texts = document.createElement('input');
+            texts.setAttribute('type', 'text');//输入框的类型
+            texts.setAttribute('name', "item");//输入框的名字
+            //把文本添加到li下面 appendChild
+            newItemDiv.appendChild(texts);
+            //获取到div
+            var base = document.getElementById("baseItemId");
+            var item1 = document.getElementById("item1Id");
+            base.appendChild(newItemDiv, item1);
+        }
+        function sub() {
+            var inp = document.getElementsByName("baseItemId");
+            var inputs = new Array();
+            for (var i = 0; i < inp.length; i++) {
+                inputs[i] = inp[i].value;
+            }
+            alert(inputs);						//将输入框的值赋予inputs数组中
+        }
+    </script>
+</head>
+
+<body>
+    <div>你好，<span th:text="${username}"></span></div>
+    <p><a href="/test">增加</a></p>
+    <div>
+        <div>我发起的投票</div>
+        <div th:unless="${#lists.isEmpty(votebundles)}">
+            <dl th:each="votebundle : ${votebundles}">
+            <a th:href="@{'/votes/'+${votebundle.vid}}">
+                <dt class="bookHeadline" th:text="${votebundle.vname}"></dt>
+            </a>
+            </dl>
+            </div>
+        <div>我参与的投票</div>
+    </div>
+    <form th:action="@{/create}" th:object="${votebd}" method="post" >
+        <!-- th:object="${votebundle}" -->
+        <h2>创建新投票</h2>
+        <p>标题：</p>
+        <input type="text" th:field="*{vname}"/> 
+        <p>描述：</p>
+        <textarea  th:field="*{vdescrip}" rows="10" cols="30"></textarea>
+        <p>选项</p>
+        <div id="baseItemId">
+            <div>
+                <input type="text" name="item" id="item1Id">
+            </div>
+            <div>
+                <input type="text" name="item" id="item2Id">
+            </div>
+        </div>
+        <input type="button" value="+" onclick="add();">
+        <p>
+            <input type="submit" value="完成">
+        </p>
+<!--        <input type="text" th:field="*{vcreator}" th:attr="value=${username}">  不能用 待解决-->
+    </form>
+    <div><a href="/all">all</a></div>
+    <div><a href="/logout">log out</a></div>
+
+</body>
+
+</html>
